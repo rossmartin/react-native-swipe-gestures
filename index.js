@@ -42,14 +42,16 @@ class GestureRecognizer extends Component {
   }
 
   _handleShouldSetPanResponder(evt, gestureState) {
+    if (this.props.disablePanresponder) return false;
     return evt.nativeEvent.touches.length === 1 && !this._gestureIsClick(gestureState);
   }
-  
+
   _gestureIsClick(gestureState) {
     return Math.abs(gestureState.dx) < 5  && Math.abs(gestureState.dy) < 5;
   }
 
   _handlePanResponderEnd(evt, gestureState) {
+    if (this.props.disablePanresponder) return false;
     const swipeDirection = this._getSwipeDirection(gestureState);
     this._triggerSwipeHandlers(swipeDirection, gestureState);
   }
